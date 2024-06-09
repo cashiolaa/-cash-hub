@@ -2675,3 +2675,63 @@ local ColorPicker = MainTab:CreateColorPicker({
         -- The variable (Value) is a Color3fromRGB value based on which color is selected
     end
 })
+
+local Slider = OtherTab:CreateSlider({
+   Name = "Speed",
+   Range = {0, 300},
+   Increment = 16,
+   Suffix = "Speed power",
+   CurrentValue = 10,
+   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+-- Get the player and their character
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Create a ScreenGui for the UI
+local gui = Instance.new("ScreenGui")
+gui.Parent = player.PlayerGui
+
+-- Create a Frame to hold the slider
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 200, 0, 50)
+frame.Position = UDim2.new(0.5, -100, 0.9, -25)
+frame.BackgroundColor3 = Color3.new(0, 0, 0)
+frame.BackgroundTransparency = 0.5
+frame.Parent = gui
+
+-- Create a TextLabel for the title
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0.5, 0)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.Text = "Speed"
+title.TextColor3 = Color3.new(1, 1, 1)
+title.Parent = frame
+
+-- Create a Slider for adjusting the speed
+local slider = Instance.new("TextButton")
+slider.Size = UDim2.new(1, -20, 0.5, 0)
+slider.Position = UDim2.new(0, 10, 0.5, 0)
+slider.BackgroundColor3 = Color3.new(0.5, 0.5, 0.5)
+slider.TextColor3 = Color3.new(1, 1, 1)
+slider.Text = ""
+slider.Parent = frame
+
+-- Function to update the humanoid's walkspeed
+local function updateSpeed(value)
+    humanoid.WalkSpeed = value
+end
+
+-- Function to handle slider value changes
+local function onValueChanged()
+    local value = slider.Position.X.Scale * 100
+    updateSpeed(value)
+end
+
+-- Connect the value changed event of the slider to the function
+slider.MouseButton1Down:Connect(onValueChanged)
+slider.MouseButton1Drag:Connect(onValueChanged)
+   -- The variable (Value) is a number which correlates to the value the slider is currently at
+   end,
+})
