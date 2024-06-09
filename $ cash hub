@@ -2666,6 +2666,13 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/michaelheus/Michael/m
    end,
 })
 
+local Button = MainTab:CreateButton({
+   Name = "Arsenal gui *this gui has a key* ",
+   Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/FreeeScripts/FREEHub/main/Loader", true))()
+   end,
+})
+
 local ColorPicker = MainTab:CreateColorPicker({
     Name = "Color Picker",
     Color = Color3.fromRGB(255,255,255),
